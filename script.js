@@ -459,34 +459,42 @@ function closeLanguageModal() {
 }
 
 async function getMovieStreamUrl(movieId, language = 'legendado') {
-    // For dubbed content, try Brazilian-specific sources first
+    // For dubbed content, try Stremio add-ons first
     if (language === 'dublado') {
-        // Try SuperEmbed first (supports Brazilian content)
         try {
-            const superEmbedUrl = `https://multiembed.mov/?video_id=${movieId}&tmdb=1`;
-            console.log(`Testando SuperEmbed dublado: ${superEmbedUrl}`);
-            return superEmbedUrl;
-        } catch (error) {
-            console.warn('SuperEmbed falhou:', error);
-        }
-        
-        // Try regular sources with PT-BR parameters
-        const ptbrSources = [
-            `https://vidsrc.me/embed/movie/${movieId}?lang=pt-BR`,
-            `https://2embed.cc/embed/movie/${movieId}?lang=pt-BR`,
-            `https://embed.su/embed/movie/${movieId}?audio=pt-BR`,
-            `https://v2.vidsrc.me/embed/movie/${movieId}?lang=pt-BR`,
-            `https://vidsrc.to/embed/movie/${movieId}?lang=pt-BR`
-        ];
-        
-        for (const url of ptbrSources) {
-            try {
+            const movieData = await fetchFromTMDb(`/movie/${movieId}`);
+            const imdbId = movieData.imdb_id;
+            
+            // Try to resolve dubbed stream via Stremio add-ons
+            const dubbedStream = await window.ptbrDubResolver.resolveDubbedStream({
+                tmdbId: movieId,
+                imdbId: imdbId,
+                type: 'movie'
+            });
+            
+            if (dubbedStream) {
+                console.log(`Stream dublado encontrado via ${dubbedStream.sourceTag}: ${dubbedStream.url}`);
+                return dubbedStream.url;
+            }
+            
+            console.log('Nenhum stream dublado encontrado via Stremio, tentando embeds com PT-BR...');
+            
+            // Fallback: try regular embeds with PT-BR parameters
+            const ptbrSources = [
+                `https://vidsrc.me/embed/movie/${movieId}?lang=pt-BR`,
+                `https://2embed.cc/embed/movie/${movieId}?lang=pt-BR`,
+                `https://embed.su/embed/movie/${movieId}?audio=pt-BR`,
+                `https://v2.vidsrc.me/embed/movie/${movieId}?lang=pt-BR`,
+                `https://vidsrc.to/embed/movie/${movieId}?lang=pt-BR`
+            ];
+            
+            for (const url of ptbrSources) {
                 console.log(`Testando fonte PT-BR: ${url}`);
                 return url;
-            } catch (error) {
-                console.warn(`Fonte PT-BR falhou:`, error);
-                continue;
             }
+            
+        } catch (error) {
+            console.warn('Erro ao resolver stream dublado:', error);
         }
     }
     
