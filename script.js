@@ -461,7 +461,16 @@ function closeLanguageModal() {
 async function getMovieStreamUrl(movieId, language = 'legendado') {
     // For dubbed content, try Brazilian-specific sources first
     if (language === 'dublado') {
-        // Try regular sources with PT-BR parameters first (more reliable)
+        // Try SuperEmbed first (supports Brazilian content)
+        try {
+            const superEmbedUrl = `https://multiembed.mov/?video_id=${movieId}&tmdb=1`;
+            console.log(`Testando SuperEmbed dublado: ${superEmbedUrl}`);
+            return superEmbedUrl;
+        } catch (error) {
+            console.warn('SuperEmbed falhou:', error);
+        }
+        
+        // Try regular sources with PT-BR parameters
         const ptbrSources = [
             `https://vidsrc.me/embed/movie/${movieId}?lang=pt-BR`,
             `https://2embed.cc/embed/movie/${movieId}?lang=pt-BR`,
