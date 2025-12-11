@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TGSFilms - Streaming de Filmes</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <h1>TGSFilms</h1>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="#" class="nav-link active">Início</a></li>
+                    <li><a href="#" class="nav-link">Filmes</a></li>
+                    <li><a href="#" class="nav-link">Séries</a></li>
+                    <li><a href="#" class="nav-link">Minha Lista</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Buscar filmes...">
+                    <button id="searchBtn">🔍</button>
+                </div>
+                <button class="user-profile">👤</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Featured Hero Section -->
+        <section class="hero-section">
+            <div class="hero-carousel" id="heroCarousel">
+                <!-- Hero slides will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- Movies Sections -->
+        <section class="movies-section">
+            <div class="section-header">
+                <h2>Lançamentos</h2>
+                <a href="#" class="see-all">Ver todos →</a>
+            </div>
+            <div class="movies-carousel" id="latestMovies">
+                <!-- Movies will be dynamically added here -->
+            </div>
+        </section>
+
+        <section class="movies-section">
+            <div class="section-header">
+                <h2>Populares</h2>
+                <a href="#" class="see-all">Ver todos →</a>
+            </div>
+            <div class="movies-carousel" id="popularMovies">
+                <!-- Movies will be dynamically added here -->
+            </div>
+        </section>
+
+        <section class="movies-section">
+            <div class="section-header">
+                <h2>Ação</h2>
+                <a href="#" class="see-all">Ver todos →</a>
+            </div>
+            <div class="movies-carousel" id="actionMovies">
+                <!-- Movies will be dynamically added here -->
+            </div>
+        </section>
+
+        <section class="movies-section">
+            <div class="section-header">
+                <h2>Comédia</h2>
+                <a href="#" class="see-all">Ver todos →</a>
+            </div>
+            <div class="movies-carousel" id="comedyMovies">
+                <!-- Movies will be dynamically added here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Movie Modal -->
+    <div class="modal" id="movieModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <!-- Movie details will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Language Selection Modal -->
+    <div class="modal" id="languageModal">
+        <div class="modal-content language-modal-content">
+            <span class="close" id="languageModalClose">&times;</span>
+            <div class="modal-body">
+                <h2>Escolha o idioma</h2>
+                <div class="language-buttons">
+                    <button class="btn btn-primary" id="legendadoBtn">Legendado</button>
+                    <button class="btn btn-secondary" id="dubladoBtn">Dublado</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
